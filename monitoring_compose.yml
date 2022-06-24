@@ -31,13 +31,11 @@ services:
     networks:
       - benchmarking-fw-net
     volumes:
-      # - ./local_bind_volume_dir:/var/lib/influxdb 
       - influxdb-data:/var/lib/influxdb
     ports:
       - 8086:8086
   pushgateway:
     image: prom/pushgateway:${PUSHGW_IMG_TAG:-latest}
-#    image: prom/pushgateway:${PUSHGW_IMG_TAG:-v0.4.0
     container_name: pushgateway
     ports:
       - 9091:9091
@@ -45,7 +43,6 @@ services:
       - benchmarking-fw-net
   prometheus:
     image: prom/prometheus:v2.0.0
-#    image: prom/prometheus:v2.0.0
     container_name: prometheus
     command: --config.file=/etc/prometheus/prometheus.yml
     networks:
@@ -59,19 +56,16 @@ services:
   grafana:
     image: grafana/grafana:${GRAFANA_IMG_TAG:-latest}
     container_name: grafana
-#    image: grafana/grafana:4.6.2
     ports:
       - 3000:3000
     networks:
       - benchmarking-fw-net
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=password
-      # - GF_PATHS_CONFIG=/opt/grafana-config/grafana.ini
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes:
       - grafana-data:/var/lib/grafana
-      # - ./grafana-storage/grafana-data:/var/lib/grafana # didn't work because of permissions
-      # USE the following in combination with env GF_PATHS_CONFIG=/opt/grafana-config/grafana.ini
-      # - ./grafana-storage/config:/opt/grafana-config 
   statsd:
     image: graphiteapp/graphite-statsd
     container_name: statsdgraphite
@@ -84,7 +78,6 @@ services:
   alertmanager:
     image: prom/alertmanager:${ALERTMANAGER_IMG_TAG:-latest}
     container_name: alertmanager
-#    image: prom/alertmanager:v0.11.0
     command: --config.file=/etc/alertmanager/alertmanager.yml
     networks:
       - benchmarking-fw-net
