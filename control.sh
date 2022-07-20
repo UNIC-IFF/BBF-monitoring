@@ -52,7 +52,6 @@ function generate_network_configs()
   else
     echo "The ${TESTNET_NAME} docker network couldn't be found!"
     docker network create ${TESTNET_NAME}
-    return 1;
   fi;
 
   #creating docker volumes if they are not existed

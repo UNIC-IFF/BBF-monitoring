@@ -72,7 +72,7 @@ services:
     networks:
       - benchmarking-fw-net
     ports:
-      - 80:80
+      - 81:80
       - 8126:8126
       - 8125:8125/udp    
   alertmanager:
