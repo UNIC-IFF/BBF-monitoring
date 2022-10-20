@@ -1,3 +1,5 @@
+:no_entry: [DEPRECATED] Active at https://github.com/UniversityOfNicosia/BBF-monitoring
+
 # BBF-monitoring
 Blockchain Benchmarking Framework Monitoring stack
 
